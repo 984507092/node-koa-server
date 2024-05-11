@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "set PORT=3000 && nodemon app.js",
-    "start": "set PORT=3000&& node app.js",
+    "dev": "set PORT=3000 && nodemon ./src/app.js",
+    "start": "set PORT=3000&& node ./src/app.js",
     "build": "rollup --config"
   },
   "keywords": [],

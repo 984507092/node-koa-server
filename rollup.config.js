@@ -3,7 +3,7 @@ const commonjs = require('@rollup/plugin-commonjs');
 const json = require('@rollup/plugin-json');
 const terser = require('@rollup/plugin-terser');
 module.exports = {
-  input: './app.js', // 入口文件
+  input: './src/app.js', // 入口文件
   output: {
     file: './dist/bundle.js', // 输出文件
     format: 'es', // 输出格式 amd / es / cjs / iife / umd / system

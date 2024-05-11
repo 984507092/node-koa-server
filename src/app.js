@@ -1,6 +1,6 @@
 const Koa = require('koa');
-const router = require('./router/index')
-const config = require('./config/index')
+const router = require('../router/index')
+const config = require('../config/index')
 const app = new Koa()
 const cors = require('koa2-cors');
 const bodyParser = require('koa-bodyparser');//用作解析

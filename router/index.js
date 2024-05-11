@@ -17,14 +17,14 @@ router.get('/user', async (ctx, next) => {
     // 优先使用X-Forwarded-For头部的IP地址，如果没有则使用X-Real-IP，最后才是request.ip
     const clientIP = forwardedFor
       ? forwardedFor.split(',').reverse()[0] // 获取X-Forwarded-For中的第一个IP地址
-      : realIp || ip;
+      : realIp ? realIp : ip
 
-
+    let clientIp = getIPv4Address(clientIP)
 
     // 城市定位 code2
     let infoCode = await getIpCode({
       key: config.KEY,
-      ip: clientIP,
+      ip: clientIp.includes('127.0.0.1') ? '' : clientIp,
     })
 
     // 天气数据
@@ -37,14 +37,23 @@ router.get('/user', async (ctx, next) => {
 
     let logFile = {
       ...JSON.parse(data),
-      ip: getIPv4Address(clientIP),
+      ip: clientIp,
     }
-    readFile(logFile)
 
-    ctx.body = {
-      message: "操作成功",
-      code: 200,
-      data: logFile
+    if (JSON.parse(data).status == 1) {
+      ctx.body = {
+        message: "操作成功",
+        code: 200,
+        data: logFile
+      }
+
+      readFile(logFile)
+    } else {
+      ctx.body = {
+        message: "参数错误",
+        code: 200,
+        data: null
+      }
     }
 
   } catch (err) {
